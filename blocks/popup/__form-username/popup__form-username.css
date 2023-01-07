@@ -1,0 +1,14 @@
+.popup__form-username {
+  width: 358px;
+  height: 27px;
+  border-style: none;
+  border-bottom: 1px solid #545454;
+  margin: 0 auto 30px;
+}
+
+@media screen and (max-width: 580px) {
+  .popup__form-username {
+    width: 238px;
+    margin: 0 auto 30px;
+  }
+}
