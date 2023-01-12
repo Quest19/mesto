@@ -14,6 +14,6 @@
 @media screen and (max-width: 345px) {
   .profile {
     width: calc(100% - 38px);
-    margin: 39px auto;
+    margin: 39px auto 30px;
   }
 }

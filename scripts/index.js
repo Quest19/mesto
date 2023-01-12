@@ -1,34 +1,34 @@
 const popup = document.querySelector(".popup");
 const popupCloseButton = popup.querySelector(".popup__btn-close");
 const popupOpenButton = document.querySelector(".profile__edit-btn");
-const popupSaveButton = popup.querySelector(".popup__btn-save");
 const popupContainer = document.querySelector(".popup__container");
 
 let popupForm = popup.querySelector(".popup__form");
 let profile = document.querySelector(".profile");
 let profileTitle = profile.querySelector(".profile__title");
 let profileSubtitle = profile.querySelector(".profile__subtitle");
-let popupUsername = popup.querySelector(".popup__form-username");
-let popupInfo = popup.querySelector(".popup__form-info");
+let popupUsername = popup.querySelector(".popup__input_value_name");
+let popupInfo = popup.querySelector(".popup__input_value_info");
 
-popupOpenButton.addEventListener('click', (evt) => {
-  evt.preventDefault();
+function popupOpen() {
   popup.classList.add('popup_opened');
-
   popupUsername.value = profileTitle.textContent;
-  popupInfo.value = profileSubtitle.textContent; 
-});
+  popupInfo.value = profileSubtitle.textContent;
+}
 
-popupCloseButton.addEventListener('click', (evt) => {
-  evt.preventDefault();
-  popup.classList.remove('popup_opened');
-});
+popupOpenButton.addEventListener('click', popupOpen);
 
-function formSubmit(evt) {
-  evt.preventDefault();
-  profileTitle.textContent = popupUsername.value;
-  profileSubtitle.textContent = popupInfo.value;
+function closePopup() {
   popup.classList.remove('popup_opened');
 }
 
-popupForm.addEventListener('submit', formSubmit);
+popupCloseButton.addEventListener('click', closePopup);
+
+function handleFormSubmit (evt) {
+  evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
+  profileTitle.textContent = popupUsername.value;
+  profileSubtitle.textContent = popupInfo.value;
+  closePopup();
+}
+
+popupForm.addEventListener('submit', handleFormSubmit);
