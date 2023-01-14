@@ -25,7 +25,7 @@ function closePopup() {
 popupCloseButton.addEventListener('click', closePopup);
 
 function handleFormSubmit (evt) {
-  evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
+  evt.preventDefault(); 
   profileTitle.textContent = popupUsername.value;
   profileSubtitle.textContent = popupInfo.value;
   closePopup();

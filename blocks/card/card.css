@@ -1,6 +1,7 @@
-.cards__item {
+.card {
   display: flex;
   flex-direction: column;
+  max-width: 282px;
   background-color: #fff;
   border-radius: 10px;
   overflow: hidden;

@@ -5,7 +5,7 @@
   padding-bottom: 3px;
 }
 
-@media screen and (max-width: 640px) {
+@media screen and (max-width: 720px) {
   .profile__group {
     margin: 0 auto;
   }

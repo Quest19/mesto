@@ -8,16 +8,12 @@
   overflow: hidden;
 }
 
-@media screen and (max-width: 640px) {  
+@media screen and (max-width: 720px) {  
   .profile__subtitle {
     text-align: center;
-  }
-}
-
-@media screen and (max-width: 345px) {      
-  .profile__subtitle {
     max-width: 282px;
     font-size: 14px;
     line-height: 17px;
   }
 }
+
