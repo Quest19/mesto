@@ -25,64 +25,52 @@
         <button class="profile__add-btn" type="button"></button>
       </section>
       <section class="cards">
-        <div class="card">
-          <img src="./images/kirill-pershin-1088404-unsplash.jpg" alt="Карачаевск" class="cards__image">
-          <div class="card__group">
-            <h2 class="card__title">Карачаевск</h2>
-            <button class="card__like-icon" type="button"></button>
+        <template id="cards-template">
+          <div class="card">
+            <button class="card__delete-btn" type="button"></button>
+            <button class="card__image-btn" type="button">
+              <img src="" alt="" class="card__image">
+            </button>
+            <div class="card__group">
+              <h2 class="card__title"></h2>
+              <button class="card__like-icon" type="button"></button>
+            </div>
           </div>
-        </div>  
-        <div class="card">
-          <img src="./images/kirill-pershin-1404681-unsplash.jpg" alt="Гора Эльбрус" class="cards__image">
-          <div class="card__group">
-            <h2 class="card__title">Гора Эльбрус</h2>
-            <button class="card__like-icon" type="button"></button>
-          </div>
-        </div>
-        <div class="card">
-          <img src="./images/kirill-pershin-1556355-unsplash.jpg" alt="Домбай" class="cards__image">
-          <div class="card__group">
-            <h2 class="card__title">Домбай</h2>
-            <button class="card__like-icon" type="button"></button>
-          </div>
-        </div>
-        <div class="card">
-          <img src="./images/kirill-pershin-1088404-unsplash.jpg" alt="Карачаево-Черкессия" class="cards__image">
-          <div class="card__group">
-            <h2 class="card__title">Карачаево-Черкессия</h2>
-            <button class="card__like-icon" type="button"></button>
-          </div>
-        </div>
-        <div class="card">
-          <img src="./images/kirill-pershin-1404681-unsplash.jpg" alt="Гора Эльбрус" class="cards__image">
-          <div class="card__group">
-            <h2 class="card__title">Гора Эльбрус</h2>
-            <button class="card__like-icon" type="button"></button>
-          </div>
-        </div>
-        <div class="card">
-          <img src="./images/kirill-pershin-1556355-unsplash.jpg" alt="Домбай" class="cards__image">
-          <div class="card__group">
-            <h2 class="card__title">Домбай</h2>
-            <button class="card__like-icon" type="button"></button>
-          </div>
-        </div>
+        </template>
       </section>
     </main> 
   <footer class="footer">
     <p class="footer__copyright">© 2020 Mesto Russia</p>
   </footer> 
-  <section class="popup">
+  <div class="popup popup_type_profile">
     <div class="popup__container">
-      <button class="popup__btn-close" type="button"></button>
+      <button class="popup__btn-close popup__btn-close_type_profile" type="button"></button>
       <h2 class="popup__title">Редактировать профиль</h2>
-      <form action="#" class="popup__form" name="popup__form">
+      <form action="#" class="popup__form popup__form_type_profile" name="popup__form">
         <input class="popup__input popup__input_value_name" type="text" placeholder="Ваше Имя" name="profile__name">
         <input class="popup__input popup__input_value_info" type="text" placeholder="Ваша деятельность" name="profile__info">
         <button class="popup__btn-save" type="submit">Сохранить</button>
       </form>
     </div>
-  </section>
+  </div>
+  <div class="popup popup_type_add-card">
+    <div class="popup__container">
+      <button class="popup__btn-close popup__btn-close_type_add-card" type="button"></button>
+      <h2 class="popup__title popup__title_type_add-card">Новое место</h2>
+      <form action="#" class="popup__form popup__form_type_add-card">
+        <input type="text" class="popup__input popup__input_value_label" placeholder="Название">
+        <input type="text" class="popup__input popup__input_value_link" placeholder="Ссылка на картинку">
+        <button class="popup__btn-save" type="submit">Создать</button>
+      </form>
+    </div>
+  </div>
+  <div class="popup popup_type_open-img">
+    <div class="popup__container popup__container_type_open-img">
+      <button class="popup__btn-close popup__btn-close_type_open-img" type="button"></button>
+      <img src="" alt="" class="popup__image">
+      <p class="popup__img-title"></p>
+    </div>
+  </div>
   </div>
   <script src="./scripts/index.js"></script>
 </body>
