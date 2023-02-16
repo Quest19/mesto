@@ -110,7 +110,6 @@ function createCrad(item) {
   return cardElement;
 }
 
-
 //Добавляем карты на страницу 
 const initialCards = [
   {
@@ -143,6 +142,8 @@ initialCards.forEach(function (name, link) {
   cardsContainer.append(createCrad(name, link));
 });
 
+
+//Функция добавления новой карты + деактивируем кнопку 
 function addCard (evt) {
   evt.preventDefault();
   cardsContainer.prepend(createCrad({name: popupAddImgName.value, link: popupAddImgLink.value}));
