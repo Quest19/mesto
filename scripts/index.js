@@ -1,3 +1,6 @@
+import { formValidator } from "./FormValidator.js";
+import { Card } from "./Card.js";
+
 //Страница
 const page = document.querySelector('.root');
 
@@ -10,7 +13,7 @@ const popupOpenImage = document.querySelector(".popup_type_open-img");
 //Кнопки
 const popupProfileOpenButton = document.querySelector(".profile__edit-btn");
 const popupAddCardOpenButton = document.querySelector(".profile__add-btn");
-const buttonSubmit = popupAddCard.querySelector(".popup__btn-save");
+
 
 //Элементы блока profile
 const profile = document.querySelector(".profile");
@@ -19,22 +22,55 @@ const profileSubtitle = profile.querySelector(".profile__subtitle");
 
 //Элементы блока cards
 const cardsContainer = document.querySelector(".cards");
-const cardImage = document.querySelector(".card__image");
-const cardTitle = document.querySelector(".card__title");
-const cardTemplate = document.querySelector("#cards-template").content;
 
-//Попап элемнеты
+//Попап элементы
 const popupUsername = document.querySelector(".popup__input_value_name");
 const popupInfo = document.querySelector(".popup__input_value_info");
 const popupAddImgName = document.querySelector(".popup__input_value_label");
 const popupAddImgLink = document.querySelector(".popup__input_value_link");
 const popupForm = document.querySelector(".popup__form");
 const popupAddCardForm = document.querySelector(".popup__form_type_add-card");
-const popupContainer = document.querySelector(".popup__container");
 const popupImage = document.querySelector(".popup__image");
 const popupImageTitle = document.querySelector(".popup__img-title");
 
-//Функия открытия попапов
+//Массив из 6 карт
+const initialCards = [
+  {
+    name: 'Архыз',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
+  },
+  {
+    name: 'Челябинская область',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
+  },
+  {
+    name: 'Иваново',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
+  },
+  {
+    name: 'Камчатка',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
+  },
+  {
+    name: 'Холмогорский район',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
+  },
+  {
+    name: 'Байкал',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
+  }
+];
+
+//Элементы валидации
+const formValidatorConfig = {
+  formSelector: '.popup__form',
+  inputSelector: '.popup__input',
+  submitButtonSelector: '.popup__btn-save',
+  inactiveButtonClass: 'popup__btn-save_disabled',
+  inputErrorClass: 'popup__input_type_error',
+};
+
+//Функция открытия попапов
 function openPopup(popup) {
   popup.classList.add('popup_opened');
   page.addEventListener('keydown', pressEsc);
@@ -87,72 +123,35 @@ function handleFormSubmit (evt) {
 }
 popupForm.addEventListener('submit', handleFormSubmit);
 
-
 //Функция создания карт
 function createCrad(item) {
-  const cardElement = cardTemplate.querySelector('.card').cloneNode(true);
-  const cardDelete = cardElement.querySelector('.card__delete-btn');
-  cardElement.querySelector('.card__title').textContent = item.name;
-  cardElement.querySelector('.card__image').src = item.link;
-  cardElement.querySelector('.card__image').alt = item.name;
-  cardElement.querySelector('.card__like-icon').addEventListener('click', function (evt) {
-    evt.target.classList.toggle('card__like-icon_active');
-  });
-  cardDelete.addEventListener('click', function () {
-    cardElement.remove();
-  });
-  cardElement.querySelector('.card__image-btn').addEventListener('click', function (evt) {
-    popupImage.src = item.link;
-    popupImage.alt = item.name;
-    popupImageTitle.textContent = item.name;
-    openPopup(popupOpenImage);
-  });
-  return cardElement;
+  const card = new Card(item, '#cards-template');
+  return card;
 }
 
-//Добавляем карты на страницу 
-const initialCards = [
-  {
-    name: 'Архыз',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-  },
-  {
-    name: 'Челябинская область',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-  },
-  {
-    name: 'Иваново',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-  },
-  {
-    name: 'Камчатка',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-  },
-  {
-    name: 'Холмогорский район',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-  },
-  {
-    name: 'Байкал',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-  }
-];
-
-initialCards.forEach(function (name, link) {
-  cardsContainer.append(createCrad(name, link));
+//Вывод 6 карт на страницу
+initialCards.forEach((item) => {
+  const card = new Card(item,'#cards-template');
+  cardsContainer.append(card.generateCard());
 });
 
-
-//Функция добавления новой карты + деактивируем кнопку 
+//Функция добавления карт + деактивация кнопки
 function addCard (evt) {
   evt.preventDefault();
-  cardsContainer.prepend(createCrad({name: popupAddImgName.value, link: popupAddImgLink.value}));
+  const card = createCrad({name: popupAddImgName.value, link: popupAddImgLink.value});
+  cardsContainer.prepend(card.generateCard());
   evt.target.reset();
   closePopup(popupAddCard);
   const submitButton = popupAddCard.querySelector('.popup__btn-save');
   submitButton.setAttribute('disabled', true);
   submitButton.classList.add('popup__btn-save_disabled');
 }
-
 popupAddCardForm.addEventListener('submit', addCard);
 
+const formPopupAddCardValidator = new formValidator(formValidatorConfig, popupAddCard);
+formPopupAddCardValidator.enableValidation();
+
+const formPopupProfileCardValidator = new formValidator(formValidatorConfig, popupProfile);
+formPopupProfileCardValidator.enableValidation(); 
+
+export {popupImage, popupImageTitle, openPopup, popupOpenImage}
