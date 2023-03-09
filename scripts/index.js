@@ -1,9 +1,6 @@
 import { formValidator } from "./FormValidator.js";
 import { Card } from "./Card.js";
 
-//Страница
-const page = document.querySelector('.root');
-
 //Попапы
 const popups = document.querySelectorAll('.popup');
 const popupProfile = document.querySelector(".popup_type_profile");
@@ -68,12 +65,13 @@ const formValidatorConfig = {
   submitButtonSelector: '.popup__btn-save',
   inactiveButtonClass: 'popup__btn-save_disabled',
   inputErrorClass: 'popup__input_type_error',
+  inputErrorList: 'popup__input-error',
 };
 
 //Функция открытия попапов
 function openPopup(popup) {
   popup.classList.add('popup_opened');
-  page.addEventListener('keydown', pressEsc);
+  document.addEventListener('keydown', pressEsc);
 };
 
 //Открытие попапа профиля
@@ -91,7 +89,7 @@ popupAddCardOpenButton.addEventListener('click', function () {
 //Функция закрытия попапов
 function closePopup(popup) {
   popup.classList.remove('popup_opened');
-  page.removeEventListener('keydown', pressEsc);
+  document.removeEventListener('keydown', pressEsc);
 };
 
 //Закрытие попапов кликом на оверлей и крестик
@@ -126,25 +124,23 @@ popupForm.addEventListener('submit', handleFormSubmit);
 //Функция создания карт
 function createCrad(item) {
   const card = new Card(item, '#cards-template');
-  return card;
+  const cardElement = card.generateCard();
+  return cardElement;
 }
 
 //Вывод 6 карт на страницу
 initialCards.forEach((item) => {
-  const card = new Card(item,'#cards-template');
-  cardsContainer.append(card.generateCard());
+  cardsContainer.append(createCrad(item));
 });
 
-//Функция добавления карт + деактивация кнопки
+//Функция добавления карт
 function addCard (evt) {
   evt.preventDefault();
-  const card = createCrad({name: popupAddImgName.value, link: popupAddImgLink.value});
-  cardsContainer.prepend(card.generateCard());
+  const card = {name: popupAddImgName.value, link: popupAddImgLink.value};
+  cardsContainer.prepend(createCrad(card));
   evt.target.reset();
   closePopup(popupAddCard);
-  const submitButton = popupAddCard.querySelector('.popup__btn-save');
-  submitButton.setAttribute('disabled', true);
-  submitButton.classList.add('popup__btn-save_disabled');
+  formPopupAddCardValidator.toggleButton(popupAddCardForm);
 }
 popupAddCardForm.addEventListener('submit', addCard);
 

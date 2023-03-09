@@ -21,11 +21,12 @@ class Card {
     return this._element;
   }
 
-  _setEventListeners() {
-    this._element.querySelector('.card__like-icon').addEventListener('click', evt => {
-      evt.target.classList.toggle('card__like-icon_active');
-    });
+  _toggleLikeCardButton(evt) {
+    evt.target.classList.toggle('card__like-icon_active');
+  }
 
+  _setEventListeners() {
+    this._element.querySelector('.card__like-icon').addEventListener('click', this._toggleLikeCardButton);
     this._element.querySelector('.card__delete-btn').addEventListener('click', () => {
       this._element.remove();
     })
