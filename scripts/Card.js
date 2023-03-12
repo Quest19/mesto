@@ -5,6 +5,8 @@ class Card {
     this._name = data.name;
     this._link = data.link;
     this._templateSelector = templateSelector;
+    this._element = this._getTemplate();
+    this._likeBtn = this._element.querySelector('.card__like-icon');
   }
 
   _getTemplate() {
@@ -12,7 +14,6 @@ class Card {
   }
 
   generateCard() {
-    this._element = this._getTemplate();
     this._setEventListeners();
     this._element.querySelector('.card__image').src = this._link;
     this._element.querySelector('.card__image').alt = this._name;
@@ -22,11 +23,13 @@ class Card {
   }
 
   _toggleLikeCardButton(evt) {
-    evt.target.classList.toggle('card__like-icon_active');
+    this._likeBtn.classList.toggle('card__like-icon_active');
   }
 
   _setEventListeners() {
-    this._element.querySelector('.card__like-icon').addEventListener('click', this._toggleLikeCardButton);
+    this._likeBtn.addEventListener('click', () => {
+      this._toggleLikeCardButton();
+    });
     this._element.querySelector('.card__delete-btn').addEventListener('click', () => {
       this._element.remove();
     })
