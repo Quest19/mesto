@@ -140,7 +140,7 @@ function addCard (evt) {
   cardsContainer.prepend(createCrad(card));
   evt.target.reset();
   closePopup(popupAddCard);
-  formPopupAddCardValidator.toggleButton(popupAddCardForm);
+  formPopupAddCardValidator.toggleButton();
 }
 popupAddCardForm.addEventListener('submit', addCard);
 

@@ -7,6 +7,8 @@ class Card {
     this._templateSelector = templateSelector;
     this._element = this._getTemplate();
     this._likeBtn = this._element.querySelector('.card__like-icon');
+    this._deleteBtn = this._element.querySelector('.card__delete-btn');
+    this._cardImg = this._element.querySelector('.card__image-btn');
   }
 
   _getTemplate() {
@@ -22,23 +24,30 @@ class Card {
     return this._element;
   }
 
-  _toggleLikeCardButton(evt) {
+  _toggleLikeCardButton() {
     this._likeBtn.classList.toggle('card__like-icon_active');
+  }
+
+  _deleteCard() {
+    this._element.remove();
+  }
+
+  _showCardImage() {
+    popupImage.src = this._link;
+    popupImage.alt = this._name;
+    popupImageTitle.textContent = this._name;
+    openPopup(popupOpenImage);
   }
 
   _setEventListeners() {
     this._likeBtn.addEventListener('click', () => {
       this._toggleLikeCardButton();
     });
-    this._element.querySelector('.card__delete-btn').addEventListener('click', () => {
-      this._element.remove();
+    this._deleteBtn.addEventListener('click', () => {
+      this._deleteCard();
     })
-
-    this._element.querySelector('.card__image-btn').addEventListener('click', () => {
-      popupImage.src = this._link;
-      popupImage.alt = this._name;
-      popupImageTitle.textContent = this._name;
-      openPopup(popupOpenImage);
+    this._cardImg.addEventListener('click', () => {
+      this._showCardImage();
     });
   }
 }
