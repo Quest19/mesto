@@ -31,7 +31,7 @@ export class formValidator {
     input.classList.add(this._inputErrorClass);
   }
 
-  _checkInputValidity(input) {
+  _checkInputValidity = (input) => {
     if (!input.validity.valid) {
       this._hideInputError(input, this._getErrorElement(input));
     } else {
@@ -39,11 +39,8 @@ export class formValidator {
     }
   }
 
-  _hasInvalidInput() {
-    return this._inputList.some((inputElement) => {
-      return !inputElement.validity.valid;
-    })
-  }
+  _hasInvalidInput = () => this._inputList.some(inputElement => !inputElement.validity.valid)
+  
 
   toggleButton() {
     if (this._hasInvalidInput()) {
