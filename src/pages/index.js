@@ -1,10 +1,11 @@
-import * as constants from "./constants.js"
-import { formValidator } from "./FormValidator.js";
-import { Card } from "./Card.js";
-import { Section } from "./section.js";
-import { PopupWithImage } from "./popupWithImage.js";
-import { PopupWithForm } from "./popupWithForm.js";
-import { UserInfo } from "./UserInfo.js";
+import * as constants from "../utils/constants.js"
+import { formValidator } from "../scripts/FormValidator.js";
+import { Card } from "../scripts/Card.js";
+import { Section } from "../scripts/section.js";
+import { PopupWithImage } from "../scripts/popupWithImage.js";
+import { PopupWithForm } from "../scripts/popupWithForm.js";
+import { UserInfo } from "../scripts/UserInfo.js";
+import './index.css';
 
 //Функция, которая принимает новые данные профиля и добавляет их на страницу
 function handleFormSubmit () {
