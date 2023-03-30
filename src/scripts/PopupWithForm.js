@@ -20,6 +20,13 @@ export class PopupWithForm extends Popup {
     return this._formValues;
   }
 
+  //Метод сбора данных
+  setInputValues(data) {
+    this._inputList.forEach((input) => {
+      input.value = data[input.name];
+    });
+  }
+
   closePopup() {
     super.closePopup();
     this._form.reset();

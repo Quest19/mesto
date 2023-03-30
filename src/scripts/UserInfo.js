@@ -11,12 +11,12 @@ export class UserInfo {
     return {
       name: this._userName.textContent,
       info: this._userInfo.textContent
-    }
+    };
   }
 
   //Метод, который принимает новые данные о пользователе
-  setUserInfo(name, info) {
-    this._userName.textContent = name;
-    this._userInfo.textContent = info;
+  setUserInfo(data) {
+    this._userName.textContent = data.name;
+    this._userInfo.textContent = data.info;
   }
 }

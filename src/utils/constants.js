@@ -10,6 +10,7 @@ export const popupAddCardOpenButton = document.querySelector(".profile__add-btn"
 
 
 export const cardsContainer = document.querySelector(".cards");
+
 //Элементы блока profile
 export const profile = document.querySelector(".profile");
 export const profileTitle = document.querySelector('.profile__title');

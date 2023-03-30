@@ -8,8 +8,8 @@ import { UserInfo } from "../scripts/UserInfo.js";
 import './index.css';
 
 //Функция, которая принимает новые данные профиля и добавляет их на страницу
-function handleFormSubmit () {
-  user.setUserInfo(constants.popupUsername.value, constants.popupInfo.value);
+function handleFormSubmit (data) {
+  user.setUserInfo(data);
   profilePopup.closePopup();
 }
 
@@ -23,8 +23,8 @@ function createCrad(data) {
 //Отрисока и добавление массива с картами на страницу
 const defaultCardList = new Section ({
   items: constants.initialCards,
-  renderer: (item) => {
-    const cardElement = createCrad(item);
+  renderer: (data) => {
+    const cardElement = createCrad(data);
     defaultCardList.addItem(cardElement);
   }
 }, ".cards");
@@ -32,18 +32,16 @@ const defaultCardList = new Section ({
 defaultCardList.renderItems();
 
 //Функция, которая принимает данные для отрисоки карты и добаляет ее на страницу
-function createNewCrad () {
-  const newCard = {name: constants.popupAddImgName.value, link: constants.popupAddImgLink.value};
-  constants.cardsContainer.prepend(createCrad(newCard));
+function createNewCrad (item) {
+  const newCard = createCrad(item);
+  defaultCardList.addItem(newCard);
   addCardPopup.closePopup();
 }
 
 //Открытие попапа профиля
 constants.popupProfileOpenButton.addEventListener('click', () => {
   profilePopup.openPopup();
-  const userData = user.getUserInfo();
-  constants.popupUsername.value = userData.name;
-  constants.popupInfo.value = userData.info;
+  profilePopup.setInputValues(user.getUserInfo())
   formPopupProfileCardValidator.toggleButton();
 });
 
