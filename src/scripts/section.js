@@ -1,7 +1,5 @@
 export class Section{
-  constructor({items, renderer}, containerSelector) {
-    //Массив данных
-    this._items = items; 
+  constructor({renderer}, containerSelector) {
     //Создание и отрисовка данных на странице
     this._renderer = renderer; 
     //Контейнер, куда будут добавляться наши элементы
@@ -9,8 +7,8 @@ export class Section{
   }
 
 //Метод для отрисовки массива с картами на странице
-  renderItems() {
-    this._items.forEach(item => this._renderer(item));
+  renderItems(items) {
+    items.forEach(item => this._renderer(item));
   }
 
 //Метод для вставки карт

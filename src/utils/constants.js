@@ -3,10 +3,13 @@ export const popups = document.querySelectorAll('.popup');
 export const popupProfile = document.querySelector(".popup_type_profile");
 export const popupAddCard = document.querySelector(".popup_type_add-card");
 export const popupOpenImage = document.querySelector(".popup_type_open-img");
+export const popupAddAvatarImage = document.querySelector(".popup_type_add-avatar");
+export const popupDeleteCard = document.querySelector(".popup_type_delete-card");
 
 //Кнопки
 export const popupProfileOpenButton = document.querySelector(".profile__edit-btn");
 export const popupAddCardOpenButton = document.querySelector(".profile__add-btn");
+export const popupAddAvatarOpenButton = document.querySelector(".profile__avatar-btn");
 
 
 export const cardsContainer = document.querySelector(".cards");
@@ -62,3 +65,4 @@ export const formValidatorConfig = {
   inputErrorClass: 'popup__input_type_error',
   inputErrorList: 'popup__input-error',
 };
+
