@@ -85,4 +85,12 @@ export class Api {
     })
     .then(this._getJSON)
   }
+
+  deleteCard(id) {
+    return fetch(`${this._url}cards/${id}`, {
+      method: 'DELETE',
+      headers: this._headers,
+    })
+    .then(this._getJSON);
+  }
 }

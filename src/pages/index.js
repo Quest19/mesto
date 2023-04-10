@@ -4,6 +4,7 @@ import { Card } from "../scripts/Card.js";
 import { Section } from "../scripts/section.js";
 import { PopupWithImage } from "../scripts/popupWithImage.js";
 import { PopupWithForm } from "../scripts/popupWithForm.js";
+import { PopupWithDeleteCard } from "../scripts/PopupWithDeleteCard.js";
 import { UserInfo } from "../scripts/UserInfo.js";
 import { Api } from "../scripts/Api.js";
 import './index.css';
@@ -20,14 +21,23 @@ const api = new Api({
 
 api.getAllTasks();
 
+let currentUserId;
+
 api.getUserInfo()
   .then((userData) => {
+    currentUserId = userData._id;
     user.setUserInfo(userData);
+  })
+  .catch((err) => {
+    console.log(err);
   })
 
 api.getInitialCards()
   .then((cards) => {
     defaultCardList.renderItems(cards.reverse());
+  })
+  .catch((err) => {
+    console.log(err);
   })
 
 // Promise.all([api.getUserInfo(), api.getInitialCards()])
@@ -56,7 +66,8 @@ function handleFormSubmit (item) {
 
 //Функция создания карт
 function createCrad(data) { 
-  const card = new Card(data, 
+  const card = new Card(data,
+  currentUserId,
   '#cards-template',
   (name, link) => {imagePopup.openPopupImg(name, link)});
 
@@ -145,6 +156,9 @@ profilePopup.setEventListeners();
 //Попап добавления новых карт
 const addCardPopup = new PopupWithForm('.popup_type_add-card', createNewCrad);
 addCardPopup.setEventListeners();
+
+const deleteCardPopup = new PopupWithDeleteCard('.popup_type_delete-card');
+deleteCardPopup.setEventListeners();
 
 //Валидация попапа добавления новых карт
 const formPopupAddCardValidator = new formValidator(constants.formValidatorConfig, constants.popupAddCard);
