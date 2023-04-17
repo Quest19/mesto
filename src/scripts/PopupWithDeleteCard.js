@@ -6,15 +6,15 @@ export class PopupWithDeleteCard extends Popup {
     this._form = this._popupElement.querySelector('.popup__form');
   }
 
-  setFormSubmitHandler(token) {
-    this.formSubmitHandler = token;
+  setFormSubmitHandler(element) {
+    this._formSubmitHandlerCallback = element;
   }
 
   setEventListeners() {
     super.setEventListeners();
     this._form.addEventListener('submit', (evt) => {
       evt.preventDefault();
-      this.formSubmitHandler();
+      this._formSubmitHandlerCallback();
     });
   }
 }
