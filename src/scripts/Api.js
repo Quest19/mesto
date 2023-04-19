@@ -12,26 +12,6 @@ export class Api {
     return Promise.reject(`Ошибка: ${res.status}`);
   }
 
-  getAllCardInfo() {
-    return fetch(`${this._url}cards`, {
-      headers: this._headers
-    })
-    .then(this._getJSON)
-    .then((res) => {
-      console.log(res);
-    })
-  }
-
-  getMyUserInfo() {
-    return fetch(`${this._url}users/me`, {
-      headers: this._headers
-    })
-    .then(this._getJSON)
-    .then((res) => {
-      console.log(res);
-    })
-  }
-
   getUserInfo() {
     return fetch(`${this._url}users/me`, {
       headers: this._headers

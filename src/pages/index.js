@@ -3,7 +3,7 @@ import { formValidator } from "../scripts/FormValidator.js";
 import { Card } from "../scripts/Card.js";
 import { Section } from "../scripts/section.js";
 import { PopupWithImage } from "../scripts/popupWithImage.js";
-import { PopupWithForm } from "../scripts/popupWithForm.js";
+import { PopupWithForm } from "../scripts/PopupWithForm.js";
 import { UserInfo } from "../scripts/UserInfo.js";
 import { Api } from "../scripts/Api.js";
 import { PopupWithDeleteCard } from "../scripts/PopupWithDeleteCard.js";
@@ -19,18 +19,25 @@ const api = new Api({
   }
 });
 
-api.getAllCardInfo(); //данные о картах
-api.getMyUserInfo(); //данные о пользователе
+// api.getUserInfo()
+//   .then((userData) => {
+//     userId = userData._id;
+//     user.setUserInfo(userData);
+//   })
 
-api.getUserInfo()
-  .then((userData) => {
+// api.getInitialCards()
+//   .then((cards) => {
+//     defaultCardList.renderItems(cards.reverse());
+//   })
+
+Promise.all([api.getUserInfo(), api.getInitialCards()])
+  .then(([userData, cards]) => {
     userId = userData._id;
     user.setUserInfo(userData);
-  })
-
-api.getInitialCards()
-  .then((cards) => {
     defaultCardList.renderItems(cards.reverse());
+  })
+  .catch((err) => {
+    console.log(err);
   })
 
 //Функция создания карт
@@ -39,7 +46,19 @@ function createCrad(data) {
   userId, 
   '#cards-template', 
   (name, link) => {imagePopup.openPopupImg(name, link)},
-  handleDeleteCard,
+  (id) => {
+    deleteCardPopup.openPopup();
+    deleteCardPopup.setFormSubmitHandler(() => {
+      return api.deleteCard(id)
+        .then(() => {
+          card.deleteCard();
+          deleteCardPopup.closePopup();
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+    })
+  },
   (id) => {
     api.putLikeCard(id)
     .then((res) => {
@@ -67,23 +86,23 @@ function createCrad(data) {
 
 //Функция, которая принимает новые данные профиля и добавляет их на страницу
 function handleFormSubmit(item) {
-  profilePopup.renderLoadingForProfile(true);
+  profilePopup.renderLoading();
   api.patchUserInfo(item)
    .then((data) => {
-    user.setUserInfo(data);
-    profilePopup.closePopup();
+      user.setUserInfo(data);
+      profilePopup.closePopup();
    })
    .catch((err) => {
-    console.log(err);
+      console.log(err);
    })
    .finally(() => {
-    profilePopup.renderLoadingForProfile(false);
+    profilePopup.renderFinish('Сохранить');
    })
 }
 
 //Функция, которая принимает данные для отрисоки карты и добаляет ее на страницу
 function createNewCrad(item) {
-  addCardPopup.renderLoadingForAddCard(true);
+  addCardPopup.renderLoading();
   api.postNewCard(item)
     .then((data) => {
       const newCard = createCrad(data);
@@ -94,29 +113,13 @@ function createNewCrad(item) {
       console.log(err);
     })
     .finally(() => {
-      addCardPopup.renderLoadingForAddCard(false);
+      addCardPopup.renderFinish('Создать');
     })
-}
-
-//Функция удаления карты
-function handleDeleteCard(id, element) {
-  deleteCardPopup.openPopup();
-  deleteCardPopup.setFormSubmitHandler(() => {
-    return api.deleteCard(id)
-      .then(() => {
-        element.remove();
-        element = null;
-        deleteCardPopup.closePopup();
-      })
-      .catch((err) => {
-        console.log(err);
-      })
-  })
 }
 
 //Функция редактирования аватарки профиля
 function addNewAvatar(item) {
-  profileAvatarPopup.renderLoadingForProfile(true);
+  profileAvatarPopup.renderLoading();
   api.patchProfileAvatar(item)
     .then((data) => {
       user.setUserAvatar(data);
@@ -125,8 +128,8 @@ function addNewAvatar(item) {
     .catch((err) => {
       console.log(err);
     })
-    .finally((err) => {
-      profileAvatarPopup.renderLoadingForProfile(false);
+    .finally(() => {
+      profileAvatarPopup.renderFinish('Сохранить')
     })
 }
 

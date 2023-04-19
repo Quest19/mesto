@@ -1,31 +1,12 @@
 export class Popup {
   constructor(popupSelector) {
     this._popupElement = document.querySelector(popupSelector);
-    this._loadingBtn = this._popupElement.querySelector('.popup__btn-save');
   }
 
   //Метод закрытия попапа по нажалию на клавишу Esc
   _handleEscClose = (evt) => {
     if (evt.key === 'Escape') {
       this.closePopup();
-    }
-  }
-
-  //Метод отображения сохранения на кнопке информации о пользователе и редактирования аватара
-  renderLoadingForProfile(isLoading) {
-    if (isLoading) {
-      this._loadingBtn.textContent = 'Сохранение...' 
-    } else {
-      this._loadingBtn.textContent = 'Сохранить';
-    }
-  }
-
-  //Метод отображения сохранения на кнопке добавления карт
-  renderLoadingForAddCard(isLoading) {
-    if (isLoading) {
-      this._loadingBtn.textContent = 'Сохранение...' 
-    } else {
-      this._loadingBtn.textContent = 'Создать';
     }
   }
 

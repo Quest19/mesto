@@ -3,12 +3,24 @@ import { Popup } from "./Popup.js";
 export class PopupWithForm extends Popup {
   constructor(popupSelector, handleFormSubmit) {
     super(popupSelector);
+    //Кнопки
+    this._loadingBtn = this._popupElement.querySelector('.popup__btn-save');
     //Колбэк с данными
     this._handleFormSubmit = handleFormSubmit; 
     //Формы
     this._form = this._popupElement.querySelector('.popup__form');
     //Инпуты
     this._inputList = this._popupElement.querySelectorAll('.popup__input');
+  }
+
+  //Метод отображения сохранения на кнопке
+  renderLoading() {
+      this._loadingBtn.textContent = 'Сохранение...' 
+  }
+
+  //Метод сохранения текста после обрабоки
+  renderFinish(text) {
+    this._loadingBtn.textContent = text;
   }
 
   //Метод сбора данных 

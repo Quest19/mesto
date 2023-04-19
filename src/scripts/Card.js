@@ -64,8 +64,9 @@ export class Card {
     this._likeBtn.classList.remove('card__like-icon_active');
   }
 
-  _deleteCard() { 
-    this._handleDeleteCard(this._id, this._element); 
+  deleteCard() { 
+    this._element.remove();
+    this._element = null;
   } 
  
   _setEventListeners() { 
@@ -73,7 +74,7 @@ export class Card {
       this._toggleLikeCardButton();
     }); 
     this._deleteBtn.addEventListener('click', () => { 
-      this._deleteCard(); 
+      this._handleDeleteCard(this._id); 
     }); 
     this._cardImg.addEventListener('click', () => { 
       this._handleCardClick(this._name, this._link); 
